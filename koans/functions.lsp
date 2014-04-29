@@ -192,13 +192,13 @@
     "An illustration of how lexical closures may interact."
   (let ((tangled-funs-1 (two-funs 1))
         (tangled-funs-2 (two-funs 2)))
-     (assert-equal (funcall (first tangled-funs-1)) ___)
+     (assert-equal (funcall (first tangled-funs-1)) 1)
      (funcall (second tangled-funs-1) 0)
-     (assert-equal (funcall (first tangled-funs-1)) ___)
+     (assert-equal (funcall (first tangled-funs-1)) 0)
 
-     (assert-equal (funcall (first tangled-funs-2)) ___)
+     (assert-equal (funcall (first tangled-funs-2)) 2)
      (funcall (second tangled-funs-2) 100)
-     (assert-equal (funcall (first tangled-funs-2)) ___)))
+     (assert-equal (funcall (first tangled-funs-2)) 100)))
 
 
 (define-test test-apply-function-with-apply
@@ -209,13 +209,13 @@
     (setq f2 '-)
     (setq f3 'max)
 
-    (assert-equal ___ (apply f1 '(1 2)))
-    (assert-equal ___ (apply f2 '(1 2)))
+    (assert-equal 3 (apply f1 '(1 2)))
+    (assert-equal -1 (apply f2 '(1 2)))
 
     ; after the function name, the parameters are consed onto the front
     ; of the very last parameter
-    (assert-equal ___ (apply f1 1 2 '(3)))
-    (assert-equal ___ (apply f3 1 2 3 4 '()))))
+    (assert-equal 6 (apply f1 1 2 '(3)))
+    (assert-equal 4 (apply f3 1 2 3 4 '()))))
 
 
 (define-test test-apply-function-with-funcall
@@ -225,7 +225,7 @@
     (setq f1 '+)
     (setq f2 '-)
     (setq f3 'max)
-    (assert-equal ___ (funcall f1 1 2))
-    (assert-equal ___ (funcall f2 1 2))
-    (assert-equal ___ (funcall f1 1 2 3))
-    (assert-equal ___ (funcall f3 1 2 3 4))))
+    (assert-equal 3 (funcall f1 1 2))
+    (assert-equal -1 (funcall f2 1 2))
+    (assert-equal 6 (funcall f1 1 2 3))
+    (assert-equal 4 (funcall f3 1 2 3 4))))
