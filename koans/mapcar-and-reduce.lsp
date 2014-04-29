@@ -34,7 +34,7 @@
     "Replace WRONG-FUNCTION with the correct function (don't forget
      the #') to take the 'transpose'."
   (defun WRONG-FUNCTION-1 (&rest rest) rest)
-  (defun transpose (L) (apply #'mapcar (cons #'WRONG-FUNCTION-1 L)))
+  (defun transpose (L) (apply #'mapcar (cons #'list L)))
   (assert-equal '((1 4 7)
                   (2 5 8) 
                   (3 6 9)) 
