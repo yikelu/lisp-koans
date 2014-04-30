@@ -49,8 +49,37 @@
 ;
 ; Your goal is to write the score method.
 
+(defun score-threes (k v)
+  (cond
+    ((= k 1) 1000)
+    (t (* k 100))))
+
+(defun process-threes (dice-counts)
+  (let ((sum 0))
+    (loop for k being the hash-keys in dice-counts using (hash-value v) do
+          (when (>= v 3)
+            (setf sum (+ sum (score-threes k v)))
+            (setf (gethash k dice-counts) (- v 3))))
+    sum))
+
+(defun score-value (k v)
+  "Assumes that v < 3"
+  (cond
+    ((= k 1)
+     (* v 100))
+    ((= k 5)
+     (* v 50))
+    (t 0)))
+
 (defun score (dice)
-  ; You need to write this method
+  (let ((dice-counts (make-hash-table))
+        (sum 0))
+    (loop for x in '(1 2 3 4 5 6) do (setf (gethash x dice-counts) 0))
+    (loop for x in dice do (incf (gethash x dice-counts)))
+    (setf sum (process-threes dice-counts))
+    (loop for k being the hash-keys in dice-counts using (hash-value v) do
+          (setf sum (+ sum (score-value k v))))
+    sum)
 )
 
 (define-test test-score-of-an-empty-list-is-zero
@@ -72,6 +101,8 @@
 
 (define-test test-score-of-a-triple-1-is-1000
     (assert-equal 1000  (score '(1 1 1))))
+
+;(print (score '(1 1 1)))
 
 (define-test test-score-of-other-triples-is-100x
     (assert-equal 200  (score '(2 2 2)))
