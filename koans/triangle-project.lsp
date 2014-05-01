@@ -41,8 +41,6 @@
     ((and (/= a b) (/= b c) (/= a c)) :scalene)
     ))
 
-(print (illegal-triangle-p 0 0 0))
-
 (define-test test-equilateral-triangles-have-equal-sides
     (assert-equal :equilateral (triangle 2 2 2))
     (assert-equal :equilateral (triangle 10 10 10)))
