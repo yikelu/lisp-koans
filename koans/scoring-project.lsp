@@ -58,8 +58,8 @@
   (let ((sum 0))
     (loop for k being the hash-keys in dice-counts using (hash-value v) do
           (when (>= v 3)
-            (setf sum (+ sum (score-threes k v)))
-            (setf (gethash k dice-counts) (- v 3))))
+            (incf sum (score-threes k v))
+            (decf (gethash k dice-counts) 3)))
     sum))
 
 (defun score-value (k v)
@@ -78,7 +78,7 @@
     (loop for x in dice do (incf (gethash x dice-counts)))
     (setf sum (process-threes dice-counts))
     (loop for k being the hash-keys in dice-counts using (hash-value v) do
-          (setf sum (+ sum (score-value k v))))
+          (incf sum (score-value k v)))
     sum)
 )
 
