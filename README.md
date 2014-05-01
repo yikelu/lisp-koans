@@ -1,3 +1,8 @@
+NOTE
+----
+
+These are my solutions to lisp koans.
+
 Getting Started
 ---------------
 
